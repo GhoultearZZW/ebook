@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="container" style="text-align:center;width:700px">
+<h1 th:text="#{welcome}"></h1>
+<p th:text="${username}"/>
+<div>
+    <div style="width:700px;height:300px;border:1px solid black" th:each="book:${bookList}">
+       	<div style="width:200px;height:20px;float:left;margin:130px 10px">this is picture</div>
+       	<p th:text="#{title}+':'+${book.title}"></p>
+       	<p th:text="#{publisher}+':'+${book.publisher}"></p>
+       	<p th:text="#{price}+':'+${book.price}"></p>
+        <p th:text="#{remaining}+':'+${book.remaining}"></p>
+        <a th:href ="@{'/buy/'+${username}+'/'+${book.title}}" th:text = "#{buy}"></a>
+    </div>
+    <a th:href="@{'/checkOrder/'+${username}}" th:text = "#{checkOrder}"></a>
+    <a th:href="@{'/'}" th:text = "#{enterChatRoom}"></a>
+</div>
+</div>
+</body>
+</html>

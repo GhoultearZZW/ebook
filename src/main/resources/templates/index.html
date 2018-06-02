@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>chatroom</title>
+<script src="/js/angular.min.js"></script>
+<script src="/js/sockjs.min.js"></script>
+<script src="/js/stomp.min.js"></script>
+<script type="text/javascript">
+    /*<![CDATA[*/
+
+    var stompClient = null;
+
+    var app = angular.module('app', []);
+    app.controller('MainController', function($rootScope, $scope, $http) {
+
+        $scope.data = {
+            //连接状态
+            connected : false,
+            //消息
+            message : '',
+            rows : []
+        };
+
+        //连接
+        $scope.connect = function() {
+            var socket = new SockJS('/my-websocket');
+            stompClient = Stomp.over(socket);
+            stompClient.connect({}, function(frame) {
+                // 注册发送消息
+                stompClient.subscribe('/topic/send', function(msg) {
+                    $scope.data.rows.push(JSON.parse(msg.body));
+                    $scope.data.connected = true;
+                    $scope.$apply();
+                });
+                // 注册推送时间回调
+                stompClient.subscribe('/topic/callback', function(r) {
+                    $scope.data.time = 'Time is：' + r.body;
+                    $scope.data.connected = true;
+                    $scope.$apply();
+                });
+
+                $scope.data.connected = true;
+                $scope.$apply();
+            });
+        };
+
+        $scope.disconnect = function() {
+            if (stompClient != null) {
+                stompClient.disconnect();
+            }
+            $scope.data.connected = false;
+        }
+
+        $scope.send = function() {
+            stompClient.send("/app/send", {}, JSON.stringify({
+            	'name'    : $scope.data.name,
+                'message' : $scope.data.message
+            }));
+        }
+    });
+    /*]]>*/
+</script>
+</head>
+<body ng-app="app" ng-controller="MainController">
+    <label>Enter ChatRoom:</label>
+    <button type="button" ng-disabled="data.connected" ng-click="connect()">Enter</button>
+    <button type="button" ng-click="disconnect()"
+        ng-disabled="!data.connected">Quit</button>
+    <br />
+    <br />
+    <div ng-show="data.connected">
+        <label>{{data.time}}</label> <br /> <br /> <input type="text" ng-model = "data.name" placeholder="Enter Your NickName..."><input type="text"
+            ng-model="data.message" placeholder="Enter Context..." />
+        <button ng-click="send()" type="button">Send</button>
+        <br /> <br /> Message List： <br />
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in data.rows">
+                    <td>{{row.name}}:{{row.message}}</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

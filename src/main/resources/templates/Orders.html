@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	Check Orders<br/>
+	
+<table border="1">
+<tr>
+<th>BookName</th>
+<th>TotalPrice</th>
+<th>CreateTime</th>
+<th>Status</th>
+</tr>	
+<tr th:each = "order:${orders}">
+	<td th:text="${order.name}">
+	<td th:text="${order.price}">
+	<td th:text="${order.date}">
+	<td th:text="${order.status}">
+</tr>
+</table>
+<a th:href="@{'/getHome/'+${username}}">back to home</a>
+</body>
+</html>

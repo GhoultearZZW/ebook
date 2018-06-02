@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Welcome to eBookStore</title>
+</head>
+<body>
+    <h1>Login</h1>
+    <form action="#" th:action="@{/login}" th:object="${user}" method="post">
+        <p>UserName:<input type="text" th:field="*{username}"/>
+        <p>PassWord:<input type="password" th:field="*{password}"/></p>
+        <p><input type="submit" value="Submit"/><input type="reset" value="Reset"/></p>
+        <a href="/register">Register</a>
+    </form>
+</body>
+</html>
