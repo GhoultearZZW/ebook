@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <title>Title</title>
 </head>
 <body>
@@ -19,6 +19,7 @@
     </div>
     <a th:href="@{'/checkOrder/'+${username}}" th:text = "#{checkOrder}"></a>
     <a th:href="@{'/'}" th:text = "#{enterChatRoom}"></a>
+    <a th:href="@{'/friends/'+${username}}" th:text = "好友"></a>
 </div>
 </div>
 </body>

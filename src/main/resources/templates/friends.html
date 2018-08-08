@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Friends</title>
+    <script src="../static/js/jquery.min.js"></script>
+</head>
+<body>
+<div th:each="friendList:${list}">
+    <p th:text="'姓名'+':'+${friendList.getName()}"></p>
+</div>
+<div>
+    <form action="#" th:action="@{/friends/add}" th:object="${AddFriends}" method="post">
+        <p>UserName:<input type="text" th:field="*{end}"/></p>
+        <p><input type="submit" value="Submit"/></p>
+    </form>
+</div>
+</body>
+</html>

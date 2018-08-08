@@ -94,11 +94,4 @@ public class User implements Serializable{
         return getRole().equals(user.getRole());
     }
 
-    @Override
-    public int hashCode() {
-        int result = getUserId();
-        result = 31 * result + getUsername().hashCode();
-        result = 31 * result + getPassword().hashCode();
-        return result;
-    }
 }
